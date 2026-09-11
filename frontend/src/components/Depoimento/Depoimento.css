@@ -1,0 +1,35 @@
+.depoimento {
+  background-color: var(--cor-fundo-alternativo);
+  border-radius: var(--raio-padrao);
+  padding: var(--espaco-lg);
+  margin: 0;
+}
+
+.depoimento__texto {
+  font-style: italic;
+  color: var(--cor-texto);
+}
+
+.depoimento__autor {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-sm);
+  margin-top: var(--espaco-md);
+}
+
+.depoimento__autor img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.depoimento__autor div {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+}
+
+.depoimento__autor span {
+  color: var(--cor-texto-claro);
+}

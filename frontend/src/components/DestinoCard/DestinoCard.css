@@ -1,0 +1,64 @@
+.destino-card {
+  display: block;
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-padrao);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.destino-card:hover {
+  box-shadow: var(--sombra-padrao);
+  transform: translateY(-4px);
+}
+
+.destino-card__imagem-wrapper {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.destino-card__imagem-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.destino-card__avaliacao {
+  position: absolute;
+  top: var(--espaco-sm);
+  right: var(--espaco-sm);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.destino-card__conteudo {
+  padding: var(--espaco-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-xs);
+}
+
+.destino-card__pais {
+  color: var(--cor-texto-claro);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.destino-card__descricao {
+  color: var(--cor-texto-claro);
+  font-size: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.destino-card__preco {
+  margin-top: var(--espaco-xs);
+  color: var(--cor-primaria);
+}

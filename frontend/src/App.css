@@ -1,0 +1,11 @@
+/* Layout em coluna que empurra o rodapé para o fim da tela mesmo
+   quando o conteúdo da página é curto. */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-layout__conteudo {
+  flex: 1;
+}

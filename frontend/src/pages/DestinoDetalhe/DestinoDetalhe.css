@@ -1,0 +1,50 @@
+.destino-detalhe__banner {
+  height: 260px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+}
+
+.destino-detalhe__banner-overlay {
+  width: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  color: #ffffff;
+  padding: var(--espaco-lg) 0;
+}
+
+.destino-detalhe__banner-overlay h1 {
+  font-size: 1.75rem;
+}
+
+.destino-detalhe__conteudo {
+  padding: var(--espaco-xl) 0 var(--espaco-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-md);
+}
+
+.destino-detalhe__descricao {
+  font-size: 1.05rem;
+  max-width: 700px;
+}
+
+.destino-detalhe__preco {
+  color: var(--cor-primaria);
+  font-size: 1.1rem;
+}
+
+.destino-detalhe__conteudo h2 {
+  margin-top: var(--espaco-lg);
+  font-size: 1.3rem;
+}
+
+@media (min-width: 768px) {
+  .destino-detalhe__banner {
+    height: 360px;
+  }
+
+  .destino-detalhe__banner-overlay h1 {
+    font-size: 2.5rem;
+  }
+}

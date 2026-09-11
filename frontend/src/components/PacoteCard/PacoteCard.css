@@ -1,0 +1,66 @@
+.pacote-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-padrao);
+  overflow: hidden;
+}
+
+.pacote-card__imagem {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.pacote-card__conteudo {
+  padding: var(--espaco-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-xs);
+  flex: 1;
+}
+
+.pacote-card__destino {
+  color: var(--cor-texto-claro);
+  font-size: 0.9rem;
+}
+
+.pacote-card__descricao {
+  color: var(--cor-texto-claro);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.pacote-card__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--espaco-sm);
+  flex-wrap: wrap;
+  gap: var(--espaco-sm);
+}
+
+.pacote-card__duracao {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--cor-texto-claro);
+}
+
+.pacote-card__preco {
+  color: var(--cor-primaria);
+  font-size: 1.1rem;
+}
+
+.pacote-card__botao {
+  background-color: var(--cor-primaria);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: var(--raio-padrao);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.pacote-card__botao:hover {
+  background-color: var(--cor-primaria-escura);
+}

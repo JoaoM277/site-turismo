@@ -1,0 +1,43 @@
+.home-banner {
+  background: linear-gradient(
+      rgba(9, 79, 79, 0.65),
+      rgba(9, 79, 79, 0.65)
+    ),
+    url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1') center/cover no-repeat;
+  color: #ffffff;
+  text-align: center;
+  padding: var(--espaco-2xl) var(--espaco-md);
+}
+
+.home-banner__conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-md);
+}
+
+.home-banner__conteudo h1 {
+  font-size: 2rem;
+  max-width: 700px;
+}
+
+.home-banner__conteudo p {
+  font-size: 1.1rem;
+  max-width: 500px;
+}
+
+.home-secao {
+  margin: var(--espaco-2xl) auto;
+}
+
+.home-secao h2 {
+  margin-bottom: var(--espaco-lg);
+  font-size: 1.5rem;
+}
+
+/* Telas maiores: título de banner um pouco mais chamativo */
+@media (min-width: 768px) {
+  .home-banner__conteudo h1 {
+    font-size: 2.75rem;
+  }
+}

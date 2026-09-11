@@ -1,0 +1,8 @@
+.pagina-pacotes {
+  padding: var(--espaco-xl) 0 var(--espaco-2xl);
+}
+
+.pagina-pacotes__subtitulo {
+  color: var(--cor-texto-claro);
+  margin-bottom: var(--espaco-lg);
+}

@@ -1,0 +1,17 @@
+.pagina-404 {
+  text-align: center;
+  padding: var(--espaco-2xl) var(--espaco-md);
+}
+
+.pagina-404 h1 {
+  font-size: 4rem;
+  color: var(--cor-primaria);
+}
+
+.pagina-404 a {
+  display: inline-block;
+  margin-top: var(--espaco-md);
+  color: var(--cor-primaria);
+  font-weight: 600;
+  text-decoration: underline;
+}

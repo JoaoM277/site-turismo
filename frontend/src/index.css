@@ -1,0 +1,122 @@
+/* Reset básico e estilos globais da aplicação */
+@import './styles/variables.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fonte-base);
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+  line-height: 1.5;
+  /* Evita rolagem horizontal indesejada em telas pequenas */
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+/* Container padrão para centralizar e limitar a largura do conteúdo,
+   usado em praticamente todas as seções/páginas do site. */
+.container {
+  width: 100%;
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: 0 var(--espaco-md);
+}
+
+/* --- Classes utilitárias compartilhadas entre páginas --- */
+
+/* Grade responsiva usada para listar cards (destinos, pacotes).
+   Ajusta automaticamente o número de colunas conforme o espaço disponível. */
+.grade-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--espaco-lg);
+}
+
+.grade-depoimentos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--espaco-lg);
+}
+
+.mensagem-erro {
+  background-color: #fdecec;
+  color: var(--cor-perigo);
+  border: 1px solid var(--cor-perigo);
+  border-radius: var(--raio-padrao);
+  padding: var(--espaco-md);
+}
+
+.mensagem-sucesso {
+  background-color: #eafaf1;
+  color: var(--cor-sucesso);
+  border: 1px solid var(--cor-sucesso);
+  border-radius: var(--raio-padrao);
+  padding: var(--espaco-md);
+}
+
+/* Formulário padrão reutilizado nas páginas de Reserva e Contato. */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-md);
+  max-width: 500px;
+}
+
+.formulario label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-xs);
+  font-weight: 500;
+}
+
+.formulario input,
+.formulario textarea {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-padrao);
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.formulario input:focus,
+.formulario textarea:focus {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 1px;
+}
