@@ -1,5 +1,78 @@
 /* Reset básico e estilos globais da aplicação */
+@import 'tailwindcss';
 @import './styles/variables.css';
+
+/*
+ * Tokens do padrão shadcn/ui (usados pelos componentes em
+ * src/components/ui, ex: NavigationMenu, Sheet), em `@theme inline` para
+ * virarem classes utilitárias do Tailwind (bg-background, text-accent-
+ * foreground, border-border, etc). Os valores em si ficam em `:root`
+ * logo abaixo, reaproveitando a paleta já definida em
+ * styles/variables.css — assim os componentes shadcn nascem com a
+ * identidade visual atual do site em vez da paleta padrão neutra, e só
+ * precisam ser trocados num lugar quando a identidade de Barra do Corda
+ * for definida.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  /* Levemente maior que o padrão shadcn (0.625rem) — deixa botões,
+     dropdowns e painéis com cantos mais "soft". Elementos pequenos (botões)
+     usam rounded-lg (--radius-lg = este valor); superfícies maiores
+     (dropdown, painel mobile) usam rounded-xl (+4px) — arredondamento
+     proporcional ao tamanho do elemento, sem nenhum dos dois virar pílula. */
+  --radius: 0.75rem;
+
+  --background: var(--cor-fundo);
+  --foreground: var(--cor-texto);
+
+  --card: var(--cor-fundo);
+  --card-foreground: var(--cor-texto);
+
+  --popover: var(--cor-fundo);
+  --popover-foreground: var(--cor-texto);
+
+  --primary: var(--cor-primaria);
+  --primary-foreground: #ffffff;
+
+  --secondary: var(--cor-secundaria);
+  --secondary-foreground: var(--cor-texto);
+
+  --muted: var(--cor-fundo-alternativo);
+  --muted-foreground: var(--cor-texto-claro);
+
+  --accent: var(--cor-fundo-alternativo);
+  --accent-foreground: var(--cor-primaria);
+
+  --destructive: var(--cor-perigo);
+
+  --border: var(--cor-borda);
+  --input: var(--cor-borda);
+  --ring: var(--cor-primaria);
+}
 
 * {
   box-sizing: border-box;
