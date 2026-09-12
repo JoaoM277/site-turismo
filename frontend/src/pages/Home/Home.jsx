@@ -8,6 +8,7 @@ import Depoimento from '../../components/Depoimento/Depoimento';
 import Loader from '../../components/Loader/Loader';
 import Botao from '../../components/Botao/Botao';
 import TopBarSaudacao from '../../components/TopBarSaudacao/TopBarSaudacao';
+import BuscaMobile from '../../components/BuscaMobile/BuscaMobile';
 import './Home.css';
 
 // Depoimentos estáticos (não há endpoint de depoimentos na API mock).
@@ -41,6 +42,7 @@ export default function Home() {
   return (
     <>
       <TopBarSaudacao />
+      <BuscaMobile />
 
       <section className="home-banner">
         <div className="container home-banner__conteudo">
