@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Home from '../pages/Home/Home';
+import Sobre from '../pages/Sobre/Sobre';
 import Destinos from '../pages/Destinos/Destinos';
 import DestinoDetalhe from '../pages/DestinoDetalhe/DestinoDetalhe';
 import Pacotes from '../pages/Pacotes/Pacotes';
@@ -15,6 +16,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/sobre" element={<Sobre />} />
       <Route path="/destinos" element={<Destinos />} />
       <Route path="/destinos/:id" element={<DestinoDetalhe />} />
       <Route path="/pacotes" element={<Pacotes />} />

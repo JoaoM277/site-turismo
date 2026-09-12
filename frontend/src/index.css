@@ -4,7 +4,7 @@
 
 /*
  * Tokens do padrão shadcn/ui (usados pelos componentes em
- * src/components/ui, ex: NavigationMenu, Sheet), em `@theme inline` para
+ * src/components/ui, ex: NavigationMenu), em `@theme inline` para
  * virarem classes utilitárias do Tailwind (bg-background, text-accent-
  * foreground, border-border, etc). Os valores em si ficam em `:root`
  * logo abaixo, reaproveitando a paleta já definida em
@@ -192,4 +192,22 @@ p {
 .formulario textarea:focus {
   outline: 2px solid var(--cor-primaria);
   outline-offset: 1px;
+}
+
+/* Animação de entrada da BottomNavMobile (barra flutuante). CSS puro —
+   ver o comentário no topo de BottomNavMobile.jsx sobre por que essa
+   animação (e as outras do componente) não usam nenhuma lib de JS. */
+@keyframes entrada-flutuante {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-entrada-flutuante {
+  animation: entrada-flutuante 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }

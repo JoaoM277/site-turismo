@@ -1,0 +1,15 @@
+.pagina-sobre {
+  padding: var(--espaco-2xl) var(--espaco-md);
+  max-width: 700px;
+}
+
+.pagina-sobre h1 {
+  font-size: 2rem;
+  color: var(--cor-primaria);
+  margin-bottom: var(--espaco-md);
+}
+
+.pagina-sobre p {
+  color: var(--cor-texto-claro);
+  line-height: 1.7;
+}
