@@ -9,6 +9,7 @@ import Loader from '../../components/Loader/Loader';
 import Botao from '../../components/Botao/Botao';
 import TopBarSaudacao from '../../components/TopBarSaudacao/TopBarSaudacao';
 import BuscaMobile from '../../components/BuscaMobile/BuscaMobile';
+import HeroMobile from '../../components/HeroMobile/HeroMobile';
 import './Home.css';
 
 // Depoimentos estáticos (não há endpoint de depoimentos na API mock).
@@ -43,8 +44,11 @@ export default function Home() {
     <>
       <TopBarSaudacao />
       <BuscaMobile />
+      <HeroMobile />
 
-      <section className="home-banner">
+      {/* No mobile o hero de verdade é o HeroMobile (carrossel) acima —
+          esse banner genérico do scaffold vira exclusivo do desktop. */}
+      <section className="home-banner hidden md:block">
         <div className="container home-banner__conteudo">
           <h1>Descubra o mundo com a Explora</h1>
           <p>Os melhores destinos e pacotes de viagem em um só lugar.</p>
