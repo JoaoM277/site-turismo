@@ -7,6 +7,7 @@ import DestinoCard from '../../components/DestinoCard/DestinoCard';
 import Depoimento from '../../components/Depoimento/Depoimento';
 import Loader from '../../components/Loader/Loader';
 import Botao from '../../components/Botao/Botao';
+import TopBarSaudacao from '../../components/TopBarSaudacao/TopBarSaudacao';
 import './Home.css';
 
 // Depoimentos estáticos (não há endpoint de depoimentos na API mock).
@@ -39,6 +40,8 @@ export default function Home() {
 
   return (
     <>
+      <TopBarSaudacao />
+
       <section className="home-banner">
         <div className="container home-banner__conteudo">
           <h1>Descubra o mundo com a Explora</h1>

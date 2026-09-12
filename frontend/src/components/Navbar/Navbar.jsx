@@ -45,9 +45,13 @@ function ItensDropdown({ item }) {
 // Faixa de destaque acima da barra de navegação. Só um placeholder de
 // texto pra testar a composição visual — vira o hero de verdade
 // (imagem, chamada, CTA) quando o conteúdo de Barra do Corda for definido.
+//
+// Só aparece a partir do `md`: no mobile ela foi substituída pela
+// TopBarSaudacao (Task 3), exclusiva da Home — nas demais páginas mobile
+// não existe nenhuma faixa de topo, só o conteúdo + a BottomNavMobile.
 function TopHero() {
   return (
-    <div className="bg-primary text-primary-foreground">
+    <div className="hidden bg-primary text-primary-foreground md:block">
       <div className="container py-8 text-center md:py-10">
         <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Bem-vindo a Barra do Corda</h1>
         <p className="mx-auto mt-1 max-w-md text-sm text-primary-foreground/80">
@@ -71,7 +75,10 @@ export default function Navbar() {
   const location = useLocation();
 
   return (
-    <header className="border-b border-border">
+    // Sem TopHero nem barra de navegação visíveis no mobile (ambas somem
+    // abaixo do `md`), a borda inferior do header também fica só a
+    // partir do `md` — senão sobraria uma linha solta no topo da tela.
+    <header className="md:border-b md:border-border">
       <TopHero />
 
       {/* Em telas pequenas essa barra não tem mais o que mostrar (a
