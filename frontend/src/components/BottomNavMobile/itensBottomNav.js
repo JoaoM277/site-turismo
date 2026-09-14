@@ -14,8 +14,8 @@ import { Home, Compass, Route, Package, MessageCircle } from 'lucide-react';
 // não foi alvo de nenhuma task específica.
 export const ITENS_BOTTOM_NAV = [
   { rotulo: 'Início', para: '/', fim: true, icone: Home },
+  { rotulo: 'Rotas', para: '/rotas', icone: Route },
   { rotulo: 'Descubra', para: '/descubra', icone: Compass },
-  { rotulo: 'Roteiros', para: '/roteiros', icone: Route },
   { rotulo: 'Pacotes', para: '/pacotes', icone: Package },
   { rotulo: 'Contato', para: '/contato', icone: MessageCircle },
 ];

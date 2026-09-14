@@ -21,28 +21,28 @@ export default function RotasMapas() {
         Rotas e Destinos
       </h1>
       
-      <div className="mb-6 flex gap-4">
+      <div className="mb-6 flex flex-wrap justify-center gap-2 sm:gap-4">
         <button 
           onClick={() => setFiltro('todos')} 
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${filtro === 'todos' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+          className={`px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg font-medium transition-colors ${filtro === 'todos' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
         >
           Todos
         </button>
         <button 
           onClick={() => setFiltro('publico')} 
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${filtro === 'publico' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+          className={`px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg font-medium transition-colors ${filtro === 'publico' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
         >
-          Destinos Públicos
+          Públicos
         </button>
         <button 
           onClick={() => setFiltro('cliente')} 
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${filtro === 'cliente' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+          className={`px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg font-medium transition-colors ${filtro === 'cliente' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
         >
-          Destinos Clientes
+          Clientes
         </button>
       </div>
 
-      <div className="relative w-full max-w-4xl h-[600px] bg-slate-200 rounded-xl overflow-hidden shadow-lg border-2 border-slate-300 mx-auto">
+      <div className="relative w-full max-w-4xl h-[400px] md:h-[600px] bg-slate-200 rounded-xl overflow-hidden shadow-lg border-2 border-slate-300 mx-auto">
         {/* Imagem de fundo do mapa ilustrativo */}
         <img 
           src="https://placehold.co/1200x800/e2e8f0/64748b?text=Mapa+Ilustrativo" 
@@ -80,7 +80,7 @@ export default function RotasMapas() {
         ))}
       </div>
       
-      <div className="mt-8 flex gap-6 justify-center text-sm text-gray-600">
+      <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center text-sm text-gray-600">
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-green-500 rounded-full"></div>
           Destinos Públicos
