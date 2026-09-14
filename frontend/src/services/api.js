@@ -35,6 +35,16 @@ export const buscarPacotePorId = async (id) => {
   return data.dados;
 };
 
+export const buscarLocais = async (params = {}) => {
+  const { data } = await api.get('/locais', { params });
+  return data.dados;
+};
+
+export const buscarLocalPorId = async (id) => {
+  const { data } = await api.get(`/locais/${id}`);
+  return data.dados;
+};
+
 export const criarReserva = async (payload) => {
   const { data } = await api.post('/reservas', payload);
   return data.dados;

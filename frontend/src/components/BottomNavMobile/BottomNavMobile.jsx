@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
-import { ITENS_NAV, itemEstaAtivo } from '@/components/Navbar/itensNav';
+import { itemEstaAtivo } from '@/components/Navbar/itensNav';
+import { ITENS_BOTTOM_NAV } from './itensBottomNav';
 
 const LARGURA_ROTULO = 72; // px — largura máxima do texto que aparece ao lado do ícone ativo.
 
@@ -25,7 +26,7 @@ export default function BottomNavMobile() {
       aria-label="Navegação principal"
       className="animate-entrada-flutuante fixed inset-x-0 bottom-4 z-50 mx-auto flex h-[52px] w-fit min-w-[320px] max-w-[95vw] items-center space-x-1 rounded-full border border-border bg-background p-2 shadow-xl md:hidden"
     >
-      {ITENS_NAV.map((item) => {
+      {ITENS_BOTTOM_NAV.map((item) => {
         const Icone = item.icone;
         const ativo = itemEstaAtivo(item, location.pathname);
 
