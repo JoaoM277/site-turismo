@@ -66,7 +66,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="container home-secao">
+      {/* A partir da Task 11, no mobile a Home "acaba" na Galeria — tudo
+          abaixo dela (esse banner, destaques e depoimentos genéricos do
+          scaffold) vira exclusivo do desktop, dando lugar ao Footer
+          redesenhado logo em seguida. */}
+      <section className="container home-secao hidden md:block">
         <h2>Destinos em destaque</h2>
 
         {carregando && <Loader mensagem="Carregando destinos..." />}
@@ -81,7 +85,7 @@ export default function Home() {
         )}
       </section>
 
-      <section className="container home-secao">
+      <section className="container home-secao hidden md:block">
         <h2>O que dizem nossos viajantes</h2>
         <div className="grade-depoimentos">
           {DEPOIMENTOS.map((depoimento) => (
