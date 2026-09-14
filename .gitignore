@@ -24,3 +24,9 @@ Thumbs.db
 
 # Cobertura de testes
 coverage/
+
+# Notas internas de workflow (não fazem parte do código/produto —
+# decisão registrada em 2026-09-14: conteúdo é editado direto no código
+# pelos devs, sem painel/CMS; este arquivo é só a referência interna de
+# "onde mexer" pra isso, não precisa ir pro repositório público).
+CONTEUDO-INTERNO.md
