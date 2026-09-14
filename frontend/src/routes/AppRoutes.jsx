@@ -11,6 +11,7 @@ import Pacotes from '../pages/Pacotes/Pacotes';
 import Reserva from '../pages/Reserva/Reserva';
 import Contato from '../pages/Contato/Contato';
 import NaoEncontrada from '../pages/NaoEncontrada/NaoEncontrada';
+import RotasMapas from '../pages/RotasMapas/RotasMapas';
 
 // Declaração centralizada de todas as rotas (páginas) do site.
 // Mantém o App.jsx enxuto e facilita visualizar o "mapa" do site inteiro.
@@ -24,6 +25,7 @@ export default function AppRoutes() {
       <Route path="/destinos" element={<Destinos />} />
       <Route path="/destinos/:id" element={<DestinoDetalhe />} />
       <Route path="/pacotes" element={<Pacotes />} />
+      <Route path="/rotas" element={<RotasMapas />} />
       <Route path="/reserva/:pacoteId" element={<Reserva />} />
       <Route path="/contato" element={<Contato />} />
       <Route path="*" element={<NaoEncontrada />} />
