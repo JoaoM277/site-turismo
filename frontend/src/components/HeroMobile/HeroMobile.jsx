@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
 import { otimizarImagem } from '@/utils/imagem';
+import useCarrosselAutoAvanco from '@/hooks/useCarrosselAutoAvanco';
 
 const INTERVALO_AUTO_AVANCO_MS = 6000; // "de tempo em tempo", devagar — não some antes do usuário ler.
 
@@ -19,74 +20,23 @@ const SLIDES_HERO = [
 ];
 
 // Hero em carrossel — mobile, Home (Task 5). Rolagem por toque é CSS puro
-// (scroll-snap nativo, sem lib nenhuma: o navegador já cuida do gesto).
-// O avanço automático usa um IntersectionObserver pra saber qual slide o
-// usuário está vendo de fato, em vez de guardar seu próprio índice
-// "cego" — assim ele nunca briga com um arrasto manual: continua
-// exatamente de onde a pessoa deixou.
+// (scroll-snap nativo); avanço automático + sincronia com o toque manual
+// vêm do hook compartilhado useCarrosselAutoAvanco (ver esse arquivo pro
+// porquê — inclui a correção do bug de "página pulando pro topo" da
+// Task 8).
 export default function HeroMobile() {
-  const containerRef = useRef(null);
-  const slidesRef = useRef([]);
-  const [indiceAtual, setIndiceAtual] = useState(0);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return undefined;
-
-    const observer = new IntersectionObserver(
-      (entradas) => {
-        const maisVisivel = entradas.reduce(
-          (maior, atual) => (atual.intersectionRatio > (maior?.intersectionRatio ?? 0) ? atual : maior),
-          null,
-        );
-
-        if (maisVisivel?.isIntersecting) {
-          const indice = slidesRef.current.indexOf(maisVisivel.target);
-          if (indice !== -1) setIndiceAtual(indice);
-        }
-      },
-      { root: container, threshold: 0.6 },
-    );
-
-    slidesRef.current.forEach((slide) => slide && observer.observe(slide));
-    return () => observer.disconnect();
-  }, []);
-
-  // Reinicia a contagem sempre que o slide visível muda (automático ou
-  // por toque), dando o intervalo cheio de visualização antes de avançar
-  // de novo — e já volta pro primeiro depois do último.
-  //
-  // BUG real encontrado aqui: `elemento.scrollIntoView(...)` tenta deixar
-  // o alvo visível em TODOS os containers roláveis ancestrais — incluindo
-  // a página inteira, não só o carrossel. `block: 'nearest'` não evita
-  // isso: se o usuário tivesse rolado a página pra baixo (pra ver "Explore
-  // mais", por exemplo), o Hero ficava fora da tela e, a cada avanço
-  // automático, o navegador puxava a página inteira de volta pro topo só
-  // pra reexibi-lo — o mesmíssimo efeito de clicar num link âncora pra
-  // "/". A troca por `container.scrollTo({ left, behavior })` rola
-  // *apenas* o próprio elemento do carrossel, sem tocar em nenhum
-  // ancestral — a página nunca se move, não importa a posição de rolagem.
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const container = containerRef.current;
-      if (!container) return;
-
-      const proximoIndice = (indiceAtual + 1) % SLIDES_HERO.length;
-      container.scrollTo({ left: proximoIndice * container.clientWidth, behavior: 'smooth' });
-    }, INTERVALO_AUTO_AVANCO_MS);
-
-    return () => clearInterval(timer);
-  }, [indiceAtual]);
+  const { containerRef, indiceAtual, registrarSlide } = useCarrosselAutoAvanco(
+    SLIDES_HERO.length,
+    INTERVALO_AUTO_AVANCO_MS,
+  );
 
   return (
     <div className="mx-4 mt-3 md:hidden">
       <div
         ref={containerRef}
         // touch-action:pan-x diz explicitamente ao navegador que esse
-        // elemento só deve responder a gestos horizontais — sem isso, um
-        // arrasto de lado pra abrir o próximo slide às vezes era
-        // interpretado também como rolagem vertical, puxando a página
-        // inteira pra cima junto com o carrossel. overscroll-behavior-x
+        // elemento só deve responder a gestos horizontais, evitando
+        // ambiguidade de eixo durante o arrasto. overscroll-behavior-x
         // evita que o "esticar" no primeiro/último slide vaze pra
         // rolagem da página (scroll chaining).
         className="flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth rounded-3xl [-ms-overflow-style:none] [overscroll-behavior-x:contain] [scrollbar-width:none] [touch-action:pan-x] [&::-webkit-scrollbar]:hidden"
@@ -94,9 +44,7 @@ export default function HeroMobile() {
         {SLIDES_HERO.map((slide, indice) => (
           <article
             key={slide.id}
-            ref={(el) => {
-              slidesRef.current[indice] = el;
-            }}
+            ref={registrarSlide(indice)}
             className="relative h-60 w-full shrink-0 snap-center snap-always"
           >
             <img

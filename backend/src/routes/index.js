@@ -5,6 +5,7 @@ const pacotesRoutes = require('./pacotesRoutes');
 const reservasRoutes = require('./reservasRoutes');
 const contatoRoutes = require('./contatoRoutes');
 const locaisRoutes = require('./locaisRoutes');
+const eventosRoutes = require('./eventosRoutes');
 
 // Router "raiz" que agrupa todos os sub-routers da API.
 // Mantém o app.js limpo, com apenas uma linha para montar todas as rotas.
@@ -20,5 +21,6 @@ router.use('/pacotes', pacotesRoutes);
 router.use('/reservas', reservasRoutes);
 router.use('/contato', contatoRoutes);
 router.use('/locais', locaisRoutes);
+router.use('/eventos', eventosRoutes);
 
 module.exports = router;

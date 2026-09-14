@@ -87,6 +87,13 @@ export const buscarLocalPorId = async (id) => {
   });
 };
 
+export const buscarEventos = async () => {
+  return comCache('eventos', async () => {
+    const { data } = await api.get('/eventos');
+    return data.dados;
+  });
+};
+
 // Reservas e contato são ações (escrita), nunca cacheadas.
 export const criarReserva = async (payload) => {
   const { data } = await api.post('/reservas', payload);
