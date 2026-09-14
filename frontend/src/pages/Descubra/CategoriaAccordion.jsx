@@ -1,6 +1,8 @@
 import React from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
+import { otimizarImagem } from '../../utils/imagem';
+
 // Uma categoria (lazer/saúde/hospedagem) como item expansível — Task 6,
 // item 2: "listas distintas sendo cada uma delas um item expandível".
 // Usa <details>/<summary> nativo (mesmo padrão já usado no projeto pro
@@ -46,7 +48,13 @@ export default function CategoriaAccordion({ categoria, locais, aoSelecionarLoca
             className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors active:bg-muted"
           >
             {local.plano === 'cliente' && local.fotos?.[0] ? (
-              <img src={local.fotos[0]} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" loading="lazy" />
+              <img
+                src={otimizarImagem(local.fotos[0], { largura: 100 })}
+                alt=""
+                className="h-12 w-12 shrink-0 rounded-xl object-cover"
+                loading="lazy"
+                decoding="async"
+              />
             ) : (
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground">
                 <Icone size={18} aria-hidden="true" />

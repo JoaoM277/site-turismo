@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
+import { otimizarImagem } from '@/utils/imagem';
 
 const INTERVALO_AUTO_AVANCO_MS = 6000; // "de tempo em tempo", devagar — não some antes do usuário ler.
 
@@ -54,10 +55,24 @@ export default function HeroMobile() {
   // Reinicia a contagem sempre que o slide visível muda (automático ou
   // por toque), dando o intervalo cheio de visualização antes de avançar
   // de novo — e já volta pro primeiro depois do último.
+  //
+  // BUG real encontrado aqui: `elemento.scrollIntoView(...)` tenta deixar
+  // o alvo visível em TODOS os containers roláveis ancestrais — incluindo
+  // a página inteira, não só o carrossel. `block: 'nearest'` não evita
+  // isso: se o usuário tivesse rolado a página pra baixo (pra ver "Explore
+  // mais", por exemplo), o Hero ficava fora da tela e, a cada avanço
+  // automático, o navegador puxava a página inteira de volta pro topo só
+  // pra reexibi-lo — o mesmíssimo efeito de clicar num link âncora pra
+  // "/". A troca por `container.scrollTo({ left, behavior })` rola
+  // *apenas* o próprio elemento do carrossel, sem tocar em nenhum
+  // ancestral — a página nunca se move, não importa a posição de rolagem.
   useEffect(() => {
     const timer = setInterval(() => {
+      const container = containerRef.current;
+      if (!container) return;
+
       const proximoIndice = (indiceAtual + 1) % SLIDES_HERO.length;
-      slidesRef.current[proximoIndice]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+      container.scrollTo({ left: proximoIndice * container.clientWidth, behavior: 'smooth' });
     }, INTERVALO_AUTO_AVANCO_MS);
 
     return () => clearInterval(timer);
@@ -67,7 +82,14 @@ export default function HeroMobile() {
     <div className="mx-4 mt-3 md:hidden">
       <div
         ref={containerRef}
-        className="flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth rounded-3xl [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        // touch-action:pan-x diz explicitamente ao navegador que esse
+        // elemento só deve responder a gestos horizontais — sem isso, um
+        // arrasto de lado pra abrir o próximo slide às vezes era
+        // interpretado também como rolagem vertical, puxando a página
+        // inteira pra cima junto com o carrossel. overscroll-behavior-x
+        // evita que o "esticar" no primeiro/último slide vaze pra
+        // rolagem da página (scroll chaining).
+        className="flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth rounded-3xl [-ms-overflow-style:none] [overscroll-behavior-x:contain] [scrollbar-width:none] [touch-action:pan-x] [&::-webkit-scrollbar]:hidden"
       >
         {SLIDES_HERO.map((slide, indice) => (
           <article
@@ -78,10 +100,11 @@ export default function HeroMobile() {
             className="relative h-60 w-full shrink-0 snap-center snap-always"
           >
             <img
-              src={slide.imagem}
+              src={otimizarImagem(slide.imagem, { largura: 1000 })}
               alt=""
               className="h-full w-full object-cover"
               loading={indice === 0 ? 'eager' : 'lazy'}
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
 

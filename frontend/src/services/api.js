@@ -11,40 +11,83 @@ const api = axios.create({ baseURL });
 
 export default api;
 
+// --- Cache em memória das buscas (GET) ---
+//
+// `useFetch` não tinha cache nenhum: toda vez que um componente montava
+// (ex: voltar pra Home depois de visitar outra aba, já que o React
+// Router desmonta a página anterior) ele refazia a chamada de rede do
+// zero — mesmo pra dados que não mudam durante a sessão. Isso também
+// escondia uma duplicação real: a Home busca destinos pros "destaques" e
+// a BuscaMobile busca os MESMOS destinos (+ pacotes) pro índice de busca,
+// então só a Home já disparava 2 requisições repetidas pra /api/destinos.
+//
+// Cacheamos a PROMISE (não o resultado já resolvido): se dois
+// componentes pedirem a mesma coisa ao mesmo tempo, os dois reaproveitam
+// a mesma chamada de rede em andamento em vez de disparar duas. Em caso
+// de erro, removemos do cache — senão um erro de rede passageiro ficaria
+// preso pro resto da sessão.
+const cache = new Map();
+
+function comCache(chave, buscar) {
+  if (!cache.has(chave)) {
+    cache.set(
+      chave,
+      buscar().catch((erro) => {
+        cache.delete(chave);
+        throw erro;
+      }),
+    );
+  }
+  return cache.get(chave);
+}
+
 // --- Funções de acesso a cada recurso da API ---
 // Mantidas neste arquivo para que os componentes/páginas nunca
 // precisem conhecer detalhes de URLs ou do axios diretamente.
 
 export const buscarDestinos = async (params = {}) => {
-  const { data } = await api.get('/destinos', { params });
-  return data.dados;
+  return comCache(`destinos:${JSON.stringify(params)}`, async () => {
+    const { data } = await api.get('/destinos', { params });
+    return data.dados;
+  });
 };
 
 export const buscarDestinoPorId = async (id) => {
-  const { data } = await api.get(`/destinos/${id}`);
-  return data.dados;
+  return comCache(`destino:${id}`, async () => {
+    const { data } = await api.get(`/destinos/${id}`);
+    return data.dados;
+  });
 };
 
 export const buscarPacotes = async (params = {}) => {
-  const { data } = await api.get('/pacotes', { params });
-  return data.dados;
+  return comCache(`pacotes:${JSON.stringify(params)}`, async () => {
+    const { data } = await api.get('/pacotes', { params });
+    return data.dados;
+  });
 };
 
 export const buscarPacotePorId = async (id) => {
-  const { data } = await api.get(`/pacotes/${id}`);
-  return data.dados;
+  return comCache(`pacote:${id}`, async () => {
+    const { data } = await api.get(`/pacotes/${id}`);
+    return data.dados;
+  });
 };
 
 export const buscarLocais = async (params = {}) => {
-  const { data } = await api.get('/locais', { params });
-  return data.dados;
+  return comCache(`locais:${JSON.stringify(params)}`, async () => {
+    const { data } = await api.get('/locais', { params });
+    return data.dados;
+  });
 };
 
 export const buscarLocalPorId = async (id) => {
-  const { data } = await api.get(`/locais/${id}`);
-  return data.dados;
+  return comCache(`local:${id}`, async () => {
+    const { data } = await api.get(`/locais/${id}`);
+    return data.dados;
+  });
 };
 
+// Reservas e contato são ações (escrita), nunca cacheadas.
 export const criarReserva = async (payload) => {
   const { data } = await api.post('/reservas', payload);
   return data.dados;

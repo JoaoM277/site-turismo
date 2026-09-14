@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import { otimizarImagem } from '../../utils/imagem';
 import './DestinoCard.css';
 
 // Card usado nas grades de destinos (Home e página Destinos).
@@ -10,7 +12,7 @@ export default function DestinoCard({ destino }) {
   return (
     <Link to={`/destinos/${id}`} className="destino-card">
       <div className="destino-card__imagem-wrapper">
-        <img src={imagem} alt={nome} loading="lazy" />
+        <img src={otimizarImagem(imagem, { largura: 500 })} alt={nome} loading="lazy" decoding="async" />
         <span className="destino-card__avaliacao">⭐ {avaliacao}</span>
       </div>
 

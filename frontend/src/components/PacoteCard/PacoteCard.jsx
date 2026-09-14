@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import { otimizarImagem } from '../../utils/imagem';
 import './PacoteCard.css';
 
 // Card usado na página de listagem de pacotes de viagem.
@@ -12,9 +14,10 @@ export default function PacoteCard({ pacote }) {
       {destino && (
         <img
           className="pacote-card__imagem"
-          src={destino.imagem}
+          src={otimizarImagem(destino.imagem, { largura: 500 })}
           alt={destino.nome}
           loading="lazy"
+          decoding="async"
         />
       )}
 

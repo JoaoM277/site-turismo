@@ -5,6 +5,7 @@ import { buscarDestinoPorId, buscarPacotes } from '../../services/api';
 import useFetch from '../../hooks/useFetch';
 import PacoteCard from '../../components/PacoteCard/PacoteCard';
 import Loader from '../../components/Loader/Loader';
+import { otimizarImagem } from '../../utils/imagem';
 import './DestinoDetalhe.css';
 
 // Página de detalhe de um destino específico, com os pacotes disponíveis
@@ -40,7 +41,7 @@ export default function DestinoDetalhe() {
     <article>
       <div
         className="destino-detalhe__banner"
-        style={{ backgroundImage: `url(${destino.imagem})` }}
+        style={{ backgroundImage: `url(${otimizarImagem(destino.imagem, { largura: 1200 })})` }}
       >
         <div className="destino-detalhe__banner-overlay">
           <div className="container">

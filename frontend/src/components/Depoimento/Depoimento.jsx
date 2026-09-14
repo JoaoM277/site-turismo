@@ -8,7 +8,7 @@ export default function Depoimento({ nome, cidade, texto, foto }) {
     <blockquote className="depoimento">
       <p className="depoimento__texto">“{texto}”</p>
       <footer className="depoimento__autor">
-        <img src={foto} alt={nome} />
+        <img src={foto} alt={nome} loading="lazy" decoding="async" />
         <div>
           <strong>{nome}</strong>
           <span>{cidade}</span>

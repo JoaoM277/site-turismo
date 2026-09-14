@@ -2,6 +2,7 @@ import React from 'react';
 import { Clock, ExternalLink, ImageOff } from 'lucide-react';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { otimizarImagem } from '@/utils/imagem';
 
 // Modal de detalhe de um local (Task 6, item 3: "aba ou modal próprio com
 // fotos, descrição e horário de funcionamento"). O conteúdo muda conforme
@@ -19,14 +20,15 @@ export default function LocalDetalheModal({ local, categoriaNome, aberto, aoFech
     <Dialog open={aberto} onOpenChange={(abertoNovo) => !abertoNovo && aoFechar()}>
       <DialogContent>
         {ehCliente && local.fotos?.length > 0 ? (
-          <div className="flex gap-2 overflow-x-auto p-4 pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex gap-2 overflow-x-auto p-4 pb-0 [overscroll-behavior-x:contain] [scrollbar-width:none] [touch-action:pan-x] [&::-webkit-scrollbar]:hidden">
             {local.fotos.map((foto) => (
               <img
                 key={foto}
-                src={foto}
+                src={otimizarImagem(foto, { largura: 500 })}
                 alt={local.nome}
                 className="h-40 w-56 shrink-0 rounded-xl object-cover"
                 loading="lazy"
+                decoding="async"
               />
             ))}
           </div>
