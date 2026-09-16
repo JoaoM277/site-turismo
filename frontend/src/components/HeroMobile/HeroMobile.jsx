@@ -7,16 +7,16 @@ import useCarrosselAutoAvanco from '@/hooks/useCarrosselAutoAvanco';
 
 const INTERVALO_AUTO_AVANCO_MS = 6000; // "de tempo em tempo", devagar — não some antes do usuário ler.
 
-// Slides de exemplo — imagens reaproveitadas das já usadas nos destinos
-// mock do resto do site (evita puxar imagens novas de fora). Os textos
-// são propositalmente placeholders, como pedido na task: viram conteúdo
-// real de Barra do Corda (e a categoria vira uma rota/filtro de verdade)
-// numa próxima task.
+// Fotos reais de Barra do Corda (2026-09-16) — panorâmicas aéreas do
+// pôr do sol sobre a cidade, do lote em frontend/public/imagens/galeria/
+// (mesmas fotos usadas na Galeria de Fotos). Textos e categoria
+// continuam propositalmente placeholder — só a imagem virou conteúdo
+// real por enquanto, o resto do texto ainda não foi definido.
 const SLIDES_HERO = [
-  { id: 1, imagem: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325', categoria: 'Natureza' },
-  { id: 2, imagem: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5', categoria: 'Praias' },
-  { id: 3, imagem: 'https://images.unsplash.com/photo-1526392060635-9d6019884377', categoria: 'Aventura' },
-  { id: 4, imagem: 'https://images.unsplash.com/photo-1585208798174-6cedd86e019a', categoria: 'Cultura' },
+  { id: 1, imagem: '/imagens/galeria/IMG-20260915-WA0100.jpg', categoria: 'Natureza' },
+  { id: 2, imagem: '/imagens/galeria/IMG-20260915-WA0106.jpg', categoria: 'Praias' },
+  { id: 3, imagem: '/imagens/galeria/IMG-20260915-WA0108.jpg', categoria: 'Aventura' },
+  { id: 4, imagem: '/imagens/galeria/IMG-20260915-WA0116.jpg', categoria: 'Cultura' },
 ];
 
 // Hero em carrossel — mobile, Home (Task 5). Rolagem por toque é CSS puro
