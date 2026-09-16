@@ -7,10 +7,16 @@ import { buscarTemperaturaAtual } from '../../services/clima';
 // depender de nenhuma lib de data (ver política de dependências em
 // memória: só adicionar peso quando o CSS/JS nativo não resolver).
 // `periodo` é a chave usada em MENSAGENS_CLIMA logo abaixo.
+//
+// Bug corrigido aqui: a condição original era só `hora < 12` pra manhã,
+// então de 0h a 5h59 (madrugada) também caía como "Bom dia" — testado
+// às 00:59 e a saudação errava. Agora a manhã exige `hora >= 6`, e
+// qualquer coisa fora de manhã/tarde cai em "noite" — o que inclui de
+// propósito a madrugada (0h-5h59), tratada igual ao período noturno.
 function obterSaudacao() {
   const hora = new Date().getHours();
-  if (hora < 12) return { periodo: 'manha', texto: 'Bom dia', Icone: Sunrise };
-  if (hora < 18) return { periodo: 'tarde', texto: 'Boa tarde', Icone: Sun };
+  if (hora >= 6 && hora < 12) return { periodo: 'manha', texto: 'Bom dia', Icone: Sunrise };
+  if (hora >= 12 && hora < 18) return { periodo: 'tarde', texto: 'Boa tarde', Icone: Sun };
   return { periodo: 'noite', texto: 'Boa noite', Icone: Moon };
 }
 
