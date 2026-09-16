@@ -55,13 +55,19 @@ export default function Galeria() {
         )}
 
         {fotos?.length > 0 && (
-          <div className="columns-2 gap-2 pb-24 md:columns-3 md:pb-8">
+          // Cantos retos e espaçamento mínimo (gap-0.5/mb-0.5, ~2px) de
+          // propósito (Task 12.1): borda arredondada e margem larga
+          // quebravam a leitura de "parede de fotos" — cada item vira
+          // um azulejo de mosaico, não um card isolado. Só aqui na
+          // grade; o modal de detalhe mantém cantos arredondados, que é
+          // outro contexto (uma foto sozinha, não um mosaico).
+          <div className="columns-2 gap-0.5 pb-24 md:columns-3 md:pb-8">
             {fotos.map((foto) => (
               <button
                 key={foto.id}
                 type="button"
                 onClick={() => abrirFoto(foto)}
-                className="mb-2 block w-full break-inside-avoid overflow-hidden rounded-2xl shadow-md"
+                className="mb-0.5 block w-full break-inside-avoid overflow-hidden"
               >
                 <img
                   src={otimizarImagem(resolverUrlImagem(foto.url), { largura: 500 })}
