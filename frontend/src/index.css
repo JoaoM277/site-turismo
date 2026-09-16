@@ -211,3 +211,48 @@ p {
 .animate-entrada-flutuante {
   animation: entrada-flutuante 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Efeitos do doodle no TopBarDoodle.jsx — a ilustração em si é um JPG
+   achatado (uma camada só), então não dá pra animar partes internas
+   dela (olho piscando etc, como um doodle de verdade); a "vida" vem de
+   duas camadas simples por cima, propositalmente discretas já que aqui
+   o doodle é pequeno (tamanho de logo, não mais um cartão grande): um
+   balanço sutil do conjunto, e um brilho (sheen) passando por cima de
+   vez em quando. */
+@keyframes doodle-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(-1deg);
+  }
+}
+
+@keyframes doodle-sheen {
+  0%,
+  60% {
+    background-position: 200% 0%;
+  }
+  80%,
+  100% {
+    background-position: -100% 0%;
+  }
+}
+
+.animate-doodle-float {
+  animation: doodle-float 5s ease-in-out infinite;
+}
+
+.animate-doodle-sheen {
+  animation: doodle-sheen 6s ease-in-out infinite;
+}
+
+/* Quem prefere menos movimento na tela não devia receber essa animação
+   decorativa — é só enfeite, não perde nenhuma função. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-doodle-float,
+  .animate-doodle-sheen {
+    animation: none;
+  }
+}

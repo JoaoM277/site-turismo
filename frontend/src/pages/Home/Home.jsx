@@ -7,7 +7,7 @@ import DestinoCard from '../../components/DestinoCard/DestinoCard';
 import Depoimento from '../../components/Depoimento/Depoimento';
 import Loader from '../../components/Loader/Loader';
 import Botao from '../../components/Botao/Botao';
-import TopBarSaudacao from '../../components/TopBarSaudacao/TopBarSaudacao';
+import TopBarDoodle from '../../components/TopBarDoodle/TopBarDoodle';
 import BuscaMobile from '../../components/BuscaMobile/BuscaMobile';
 import HeroMobile from '../../components/HeroMobile/HeroMobile';
 import ExploreMaisMobile from '../../components/ExploreMaisMobile/ExploreMaisMobile';
@@ -46,7 +46,7 @@ export default function Home() {
 
   return (
     <>
-      <TopBarSaudacao />
+      <TopBarDoodle />
       <BuscaMobile />
       <HeroMobile />
       <ExploreMaisMobile />
