@@ -25,6 +25,10 @@ Thumbs.db
 # Cobertura de testes
 coverage/
 
+# Fotos enviadas por usuários na Galeria (Task 12) — conteúdo gerado em
+# runtime, nunca deveria ir pro repositório (nem aprovado nem pendente).
+backend/public/uploads/
+
 # Notas internas de workflow (não fazem parte do código/produto —
 # decisão registrada em 2026-09-14: conteúdo é editado direto no código
 # pelos devs, sem painel/CMS; este arquivo é só a referência interna de

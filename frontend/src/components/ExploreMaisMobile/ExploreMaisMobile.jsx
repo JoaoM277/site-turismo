@@ -9,10 +9,10 @@ import { Compass, Route, MapPinned, Images, ChevronRight } from 'lucide-react';
 // (CategoriaAccordion) e do badge de ícone da TopBarSaudacao, só que
 // promovido a cartão cheio em vez de ficar dentro de um accordion.
 //
-// Mapa e Galeria ainda não existem de verdade (aba futura) — pra nenhum
-// link do site apontar pra lugar nenhum, ambos têm uma página placeholder
-// "Em breve" (mesmo raciocínio já usado em Sobre.jsx), sinalizada aqui
-// com o selo "Em breve" pra não parecer que o link está quebrado.
+// Mapa ainda não existe de verdade (aba futura) — pra não apontar pra
+// lugar nenhum, tem uma página placeholder "Em breve" (mesmo raciocínio
+// já usado em Sobre.jsx), sinalizada aqui com o selo "Em breve". Galeria
+// ganhou conteúdo de verdade na Task 12 e perdeu o selo.
 const SECOES_EXPLORAR = [
   {
     titulo: 'Descubra Barra do Corda',
@@ -38,7 +38,6 @@ const SECOES_EXPLORAR = [
     descricao: 'Imagens dos pontos mais bonitos da cidade.',
     icone: Images,
     para: '/galeria',
-    emBreve: true,
   },
 ];
 

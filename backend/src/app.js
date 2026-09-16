@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -15,8 +16,13 @@ const app = express();
 
 // --- Middlewares globais ---
 
-// Adiciona cabeçalhos HTTP de segurança.
-app.use(helmet());
+// Adiciona cabeçalhos HTTP de segurança. `crossOriginResourcePolicy`
+// precisa ser relaxado pra "cross-origin": por padrão o helmet bloqueia
+// que outra origem carregue recursos daqui (ex: um <img src> apontando
+// pra cá) — e frontend/backend rodam em portas diferentes mesmo em
+// desenvolvimento, então as fotos da Galeria (Task 12, servidas em
+// /uploads abaixo) não apareceriam sem isso.
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
 // Permite que o frontend (em outra origem/porta) consuma a API.
 app.use(cors({ origin: config.corsOrigin }));
@@ -28,6 +34,10 @@ app.use(express.json());
 if (config.nodeEnv !== 'production') {
   app.use(morgan('dev'));
 }
+
+// Serve os arquivos enviados pelos usuários (fotos da Galeria) como
+// arquivos estáticos, fora do prefixo /api — são recursos, não endpoints.
+app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
 // --- Rotas ---
 

@@ -11,6 +11,11 @@ const api = axios.create({ baseURL });
 
 export default api;
 
+// Origem "crua" do backend, sem o sufixo /api — os arquivos enviados na
+// Galeria (Task 12) são servidos como estático em /uploads, fora do
+// prefixo da API, então precisam desse endereço base diferente.
+export const URL_ARQUIVOS = baseURL.replace(/\/api\/?$/, '');
+
 // --- Cache em memória das buscas (GET) ---
 //
 // `useFetch` não tinha cache nenhum: toda vez que um componente montava
@@ -92,6 +97,32 @@ export const buscarEventos = async () => {
     const { data } = await api.get('/eventos');
     return data.dados;
   });
+};
+
+// Galeria (Task 12): sem cache de propósito — ao contrário do resto do
+// conteúdo (mock, nunca muda sozinho), fotos aprovadas podem aparecer a
+// qualquer momento (moderação), então cada visita à página deve buscar
+// de novo.
+export const buscarFotosGaleria = async () => {
+  const { data } = await api.get('/galeria');
+  return data.dados;
+};
+
+// multipart/form-data — envia o arquivo de imagem + username + as
+// dimensões reais (lidas no navegador antes de enviar, ver
+// EnviarFotoModal.jsx) pro masonry da galeria já nascer com o tamanho
+// certo quando a foto for aprovada.
+export const enviarFotoGaleria = async ({ arquivo, username, largura, altura }) => {
+  const formData = new FormData();
+  formData.append('foto', arquivo);
+  formData.append('username', username);
+  formData.append('largura', largura);
+  formData.append('altura', altura);
+
+  const { data } = await api.post('/galeria', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return data;
 };
 
 // Reservas e contato são ações (escrita), nunca cacheadas.
