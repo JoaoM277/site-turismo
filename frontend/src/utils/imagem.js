@@ -1,14 +1,17 @@
 import { URL_ARQUIVOS } from '@/services/api';
 
-// Resolve uma URL de imagem que pode vir de duas formas (Task 12): uma
-// URL absoluta de verdade (ex: Unsplash, usada pelas fotos-semente da
-// Galeria) ou um caminho relativo servido pelo próprio backend (ex:
-// "/uploads/galeria/foto.jpg", uma foto enviada por um usuário). Sem
-// isso, o segundo caso tentaria carregar a partir da origem do
-// frontend, onde o arquivo não existe.
+// Resolve uma URL de imagem que pode vir de três formas (Task 12): uma
+// URL absoluta de verdade (ex: Unsplash), um caminho relativo servido
+// pelo próprio FRONTEND (ex: "/imagens/galeria/foto.jpg" — fotos reais
+// versionadas no repo, ver CONTEUDO-INTERNO.md) ou um caminho relativo
+// servido pelo BACKEND (ex: "/uploads/galeria/foto.jpg", enviado em
+// runtime por um usuário via upload). Sem distinguir os dois últimos,
+// "/imagens/..." tentaria carregar a partir da origem do backend (onde
+// o arquivo não existe) em vez da origem correta, o frontend.
 export function resolverUrlImagem(url) {
   if (!url) return url;
-  return url.startsWith('http') ? url : `${URL_ARQUIVOS}${url}`;
+  if (url.startsWith('http') || url.startsWith('/imagens/')) return url;
+  return `${URL_ARQUIVOS}${url}`;
 }
 
 // Adiciona parâmetros de redimensionamento/compressão às URLs do
