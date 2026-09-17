@@ -1,0 +1,69 @@
+# Blueprint do Render pra tudo — frontend e backend no mesmo lugar.
+#
+# Por que os dois aqui (não Vercel pro frontend): consolidar numa
+# plataforma só simplifica gerenciamento (1 dashboard, 1 conta
+# conectada ao repo) sem perder nada que o projeto realmente usa hoje —
+# a revisão de mudanças acontece pelo servidor de dev local/LAN, não por
+# preview deploys de PR, então a principal vantagem "de fábrica" da
+# Vercel (preview automático por PR) não faz diferença aqui.
+#
+# Por que o backend precisa ser um Web Service de processo contínuo
+# (não serverless): multer salva foto em disco em
+# backend/public/uploads/, e todos os "dados" da API são arrays em
+# memória, sem banco (ver CONTEUDO-INTERNO.md) — isso só se comporta de
+# forma previsível (igual ao ambiente local) num servidor que fica no
+# ar entre requisições.
+#
+# Como usar: no dashboard do Render, "New +" → "Blueprint" → aponta pro
+# repositório. Ele lê este arquivo e cria os dois serviços abaixo
+# sozinho. Depois de criados, preencher as env vars marcadas
+# `sync: false` no painel de cada serviço (URL de produção um do outro).
+services:
+  - type: web
+    name: site-turismo-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # PORT não precisa ser definida aqui — o Render injeta a própria
+      # automaticamente, e config.js já lê `process.env.PORT` primeiro.
+      - key: CORS_ORIGIN
+        sync: false # preencher com a URL do site-turismo-frontend abaixo, ex: https://site-turismo-frontend.onrender.com
+
+    # Plano free: disco NÃO é persistente entre deploys/restarts — fotos
+    # enviadas na Galeria somem quando o serviço reinicia (ele também
+    # "dorme" após 15min sem tráfego e demora ~30-50s pra acordar no
+    # próximo request). Pra fotos sobreviverem de verdade a um redeploy,
+    # duas opções, nenhuma feita ainda:
+    #   1) Disco persistente do Render (plano pago) — descomentar abaixo:
+    #        disk:
+    #          name: uploads
+    #          mountPath: /opt/render/project/src/backend/public/uploads
+    #          sizeGB: 1
+    #   2) Trocar o multer.diskStorage por armazenamento externo de
+    #      verdade (S3, Cloudinary, Vercel Blob etc.) — mais trabalho,
+    #      mas sobrevive a qualquer redeploy/plataforma.
+
+  - type: web
+    name: site-turismo-frontend
+    runtime: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      # Consumida em build-time pelo Vite (precisa existir ANTES do
+      # buildCommand rodar, não é lida em runtime como a do backend).
+      - key: VITE_API_URL
+        sync: false # preencher com a URL do site-turismo-backend acima + /api, ex: https://site-turismo-backend.onrender.com/api
+    routes:
+      # SPA fallback — o site usa BrowserRouter (react-router-dom), sem
+      # isso qualquer rota que não seja "/" (ex: /destinos/3) daria 404
+      # ao ser acessada direto ou recarregada.
+      - type: rewrite
+        source: /*
+        destination: /index.html
