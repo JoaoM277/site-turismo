@@ -22,7 +22,7 @@ services:
   - type: web
     name: site-turismo-backend
     runtime: node
-    plan: free
+    plan: starter
     rootDir: backend
     buildCommand: npm install
     startCommand: npm start
@@ -34,11 +34,12 @@ services:
       - key: CORS_ORIGIN
         sync: false # preencher com a URL do site-turismo-frontend abaixo, ex: https://site-turismo-frontend.onrender.com
 
-    # Plano free: disco NÃO é persistente entre deploys/restarts — fotos
-    # enviadas na Galeria somem quando o serviço reinicia (ele também
-    # "dorme" após 15min sem tráfego e demora ~30-50s pra acordar no
-    # próximo request). Pra fotos sobreviverem de verdade a um redeploy,
-    # duas opções, nenhuma feita ainda:
+    # Plano starter tira o "dormir após inatividade" do free, mas NÃO
+    # resolve sozinho a persistência de disco — isso é um recurso à
+    # parte no Render (a seção `disk:` abaixo), que precisa ser
+    # adicionado explicitamente independente do plano da instância. Sem
+    # ele, fotos enviadas na Galeria ainda somem a cada redeploy/restart.
+    # Pra resolver de verdade, duas opções, nenhuma feita ainda:
     #   1) Disco persistente do Render (plano pago) — descomentar abaixo:
     #        disk:
     #          name: uploads
