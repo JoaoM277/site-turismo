@@ -22,7 +22,7 @@ services:
   - type: web
     name: site-turismo-backend
     runtime: node
-    plan: starter
+    plan: hobby
     rootDir: backend
     buildCommand: npm install
     startCommand: npm start
