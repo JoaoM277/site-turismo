@@ -55,31 +55,52 @@ configurado para consumir a API do backend.
 
 ## Deploy
 
-Frontend e backend sobem juntos no **Render**, via um único Blueprint
-(`render.yaml`, na raiz do repositório) — dois serviços, um dashboard só:
+Frontend e backend sobem juntos no **Render**, como dois serviços
+criados manualmente pelo dashboard (a conta/plano usado não tem a opção
+de Blueprint/`render.yaml`, então não tem arquivo de config pra isso —
+os passos abaixo são o equivalente feito na mão).
 
-- **`site-turismo-backend`**: Web Service Node (processo contínuo, não
-  serverless — necessário porque o multer salva foto em disco em
-  `backend/public/uploads/` e os dados da API são arrays em memória, sem
-  banco — ver `CONTEUDO-INTERNO.md`).
-- **`site-turismo-frontend`**: Static Site (build do Vite), com rota de
-  fallback pra `index.html` (o site usa `BrowserRouter`, sem isso uma
-  rota tipo `/destinos/3` daria 404 ao recarregar a página).
+### Backend — "New +" → "Web Service"
 
-**Como usar**: no dashboard do Render, "New +" → "Blueprint" → apontar
-pro repositório — ele lê o `render.yaml` e cria os dois serviços
-sozinho. Depois de criados, preencher no painel as duas env vars
-marcadas `sync: false` no arquivo (cada serviço precisa da URL pública
-do outro, só disponível depois que ambos existem):
-- `CORS_ORIGIN` (no backend) = URL do `site-turismo-frontend`
-- `VITE_API_URL` (no frontend) = URL do `site-turismo-backend` + `/api`
+- Conectar o repositório.
+- **Root Directory**: `backend`
+- **Runtime**: Node
+- **Build Command**: `npm install`
+- **Start Command**: `npm start`
+- **Plan**: à escolha (processo contínuo — necessário porque o multer
+  salva foto em disco em `backend/public/uploads/` e os dados da API
+  são arrays em memória, sem banco — ver `CONTEUDO-INTERNO.md`).
+- **Env Vars**:
+  - `NODE_ENV` = `production`
+  - `CORS_ORIGIN` = URL do site estático abaixo (preencher depois que
+    ele existir)
+  - `PORT` não precisa ser definida — o Render injeta a própria
+    automaticamente, e `config.js` já lê `process.env.PORT` primeiro.
 
-**Limitação do plano free**: o disco do backend não é persistente entre
-redeploys/restarts (fotos da Galeria somem) e o serviço "dorme" após
-15min sem tráfego (primeiro request depois demora ~30-50s). Ver
-comentários no próprio `render.yaml` para as opções de resolver isso
-quando for preciso (disco persistente pago, ou trocar o upload por
-armazenamento externo tipo S3/Cloudinary).
+### Frontend — "New +" → "Static Site"
+
+- Conectar o mesmo repositório.
+- **Root Directory**: `frontend`
+- **Build Command**: `npm install && npm run build`
+- **Publish Directory**: `dist`
+- **Redirects/Rewrites**: adicionar uma regra `/*` → `/index.html` do
+  tipo **Rewrite** (o site usa `BrowserRouter`, sem isso uma rota tipo
+  `/destinos/3` daria 404 ao recarregar a página).
+- **Env Vars**:
+  - `VITE_API_URL` = URL do backend acima + `/api` (ex:
+    `https://site-turismo-backend.onrender.com/api`) — precisa existir
+    **antes** do build rodar, é consumida em build-time pelo Vite, não
+    em runtime.
+
+### Limitações a saber
+
+Se o backend ficar num plano sem disco persistente, fotos enviadas na
+Galeria somem a cada redeploy/restart do serviço; e se ficar num plano
+com sleep por inatividade, o primeiro request depois de um tempo parado
+demora mais (cold start). Pra fotos sobreviverem de verdade a qualquer
+redeploy, duas opções, nenhuma feita ainda: disco persistente do Render
+(recurso à parte, não vem junto de nenhum plano) ou trocar o
+`multer.diskStorage` por armazenamento externo (S3, Cloudinary, etc.).
 
 ## Documentação adicional
 
