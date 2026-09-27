@@ -211,3 +211,28 @@ p {
 .animate-entrada-flutuante {
   animation: entrada-flutuante 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Customizações refinadas do Leaflet para design moderno e mobile-first */
+.leaflet-popup-content-wrapper {
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.leaflet-popup-content {
+  margin: 14px;
+  line-height: 1.4;
+}
+
+.leaflet-popup-tip {
+  background: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.custom-div-marker {
+  background: transparent;
+  border: none;
+}
+
