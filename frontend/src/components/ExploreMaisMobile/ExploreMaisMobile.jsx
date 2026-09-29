@@ -30,8 +30,7 @@ const SECOES_EXPLORAR = [
     titulo: 'Veja no mapa',
     descricao: 'Encontre cada ponto turístico visualmente.',
     icone: MapPinned,
-    para: '/mapa',
-    emBreve: true,
+    para: '/rotas',
   },
   {
     titulo: 'Galeria de fotos',

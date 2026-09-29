@@ -1,4 +1,4 @@
-import { Home, Compass, Route, Images, MessageCircle } from 'lucide-react';
+import { Home, MapPinned, Compass, Route, Images } from 'lucide-react';
 
 // Itens da bottom nav (mobile) — a partir da Task 6, essa lista passou a
 // ser própria/independente da Navbar desktop (Navbar/itensNav.js): o
@@ -15,12 +15,15 @@ import { Home, Compass, Route, Images, MessageCircle } from 'lucide-react';
 //   por outros lugares (detalhe de destino, dropdown desktop), só
 //   perdeu o atalho direto daqui — mesmo tratamento já dado a
 //   Sobre/Destinos antes.
+// - Rotas (mapa interativo, branch secundo) entrou na 2ª posição; pra
+//   manter a barra em 5 itens, Contato saiu daqui — continua no footer
+//   e no menu desktop.
 // A Navbar desktop continua usando a lista antiga por enquanto — ainda
 // não foi alvo de nenhuma task específica.
 export const ITENS_BOTTOM_NAV = [
   { rotulo: 'Início', para: '/', fim: true, icone: Home },
+  { rotulo: 'Rotas', para: '/rotas', icone: MapPinned },
   { rotulo: 'Descubra', para: '/descubra', icone: Compass },
   { rotulo: 'Roteiros', para: '/roteiros', icone: Route },
   { rotulo: 'Galeria', para: '/galeria', icone: Images },
-  { rotulo: 'Contato', para: '/contato', icone: MessageCircle },
 ];

@@ -39,6 +39,14 @@ export const ITENS_NAV = [
     ],
   },
   {
+    rotulo: 'Rotas',
+    para: '/rotas',
+    icone: MapPin,
+    subitens: [
+      { rotulo: 'Mapa Interativo', descricao: 'Explore destinos públicos e de clientes num mapa.' },
+    ],
+  },
+  {
     rotulo: 'Pacotes',
     para: '/pacotes',
     icone: Package,
